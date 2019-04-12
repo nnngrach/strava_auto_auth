@@ -32,6 +32,16 @@ Apify.main(async () => {
       //     });
       // });
 
+
+      // Grab a screenshot
+      console.log('Saving screenshot...');
+      const screenshotBuffer = await page.screenshot();
+      await Apify.setValue('screenshot.png', screenshotBuffer, { contentType: 'image/png' });
+      const storeId = process.env.APIFY_DEFAULT_KEY_VALUE_STORE_ID;
+      console.log(`- https://api.apify.com/v2/key-value-stores/${storeId}/records/screenshot.png`)
+      console.log(`- https://api.apify.com/v2/key-value-stores/${storeId}/records/page.pdf`);
+
+
       await page.close();
       return 'done';
 
