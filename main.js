@@ -26,13 +26,6 @@ Apify.main(async () => {
       await page1.waitForNavigation();
 
 
-      // console.log('Saving screenshot of User page...');
-      // const screenshotBuffer = await page1.screenshot();
-      // await Apify.setValue('screenshot.png', screenshotBuffer, { contentType: 'image/png' });
-      // const storeId = process.env.APIFY_DEFAULT_KEY_VALUE_STORE_ID;
-      // console.log(`- https://api.apify.com/v2/key-value-stores/${storeId}/records/screenshot.png`)
-
-
       console.log('Extracting _strava4_session cookie');
       const sessionFourCookie = await page1.cookies();
       //console.log(sessionFourCookie);
@@ -43,11 +36,15 @@ Apify.main(async () => {
       await page2.setCookie(...sessionFourCookie);
       await page2.goto('https://heatmap-external-a.strava.com/auth');
 
+
       console.log('Extracting CloudFront cookies');
       const cloudfontCookie = await page2.cookies();
-      await Apify.setValue('OUTPUT', cloudfontCookie, { contentType: 'application/json' });
       //console.log(cloudfontCookie);
 
+
+      console.log('Saving CloudFront cookies');
+      const store = await Apify.openKeyValueStore();
+      await store.setValue('cloudfontCookie', { cookie: cloudfontCookie });
 
 
       console.log('Success! Closing Puppeteer');
