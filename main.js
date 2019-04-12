@@ -39,14 +39,13 @@ Apify.main(async () => {
 
 
       console.log('Authoriztion on heatmap-external-a.strava.com/auth');
-      // Use cookies in other tab or browser
       const page2 = await browser.newPage();
       await page2.setCookie(...sessionFourCookie);
-      await page2.goto('https://heatmap-external-a.strava.com/auth'); // Opens page as logged user
-
+      await page2.goto('https://heatmap-external-a.strava.com/auth');
 
       console.log('Extracting CloudFront cookies');
       const cloudfontCookie = await page2.cookies();
+      await Apify.setValue('OUTPUT', cloudfontCookie, { contentType: 'application/json' });
       //console.log(cloudfontCookie);
 
 
