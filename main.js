@@ -42,10 +42,11 @@ Apify.main(async () => {
       //console.log(cloudfontCookie);
 
 
-      console.log('Saving CloudFront cookies');
-      const store = await Apify.openKeyValueStore();
-      await store.setValue('cloudfontCookie', { cookie: cloudfontCookie });
 
+      // console.log('Saving CloudFront cookies');
+      // const store = await Apify.openKeyValueStore();
+      // await store.setValue('cloudfontCookie', { cookie: cloudfontCookie });
+      await Apify.pushData(cloudfontCookie);
 
       console.log('Success! Closing Puppeteer');
       await browser.close();
