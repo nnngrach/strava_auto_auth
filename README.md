@@ -8,7 +8,7 @@ To get Strava auth cookies you have to send POST request to my script on Apify.c
 
 `POST https://api.apify.com/v2/acts/nnngrach~strava-auth/run-sync?token=ATnnxbF6sE7zEZDmMbZTTppKo`
 
-In the body of this request add a JSON with youe email and password. Mime type (application/json).
+In the body of this request add a JSON with your email and password. Mime type is (application/json).
 
 `{ "email": "your_nick@gmail.com" , "password": "Your_Password" }`
 
@@ -22,14 +22,14 @@ To load Strava Heatmap tile you have two ways. At first you can add this cookie 
 
 `GET https://heatmap-external-{abc}.strava.com/tiles-auth/all/hot/{z}/{x}/{y}.png?px=256`
 
-In another way you can just add in parameters some vaues from cookie: CloudFront-Signature, CloudFront-Key-Pair-Id, CloudFront-Policy.
+In another way you can parse cookie and add some values from it to your URL request. You need next values: CloudFront-Signature, CloudFront-Key-Pair-Id, CloudFront-Policy.
 
 `GET https://heatmap-external-{abc}.strava.com/tiles-auth/all/hot/{z}/{x}/{y}.png?px=256&Signature={CloudFront-Signature}&Key-Pair-Id={CloudFront-Key-Pair-Id}&Policy={CloudFront-Policy}`
 
 
-### API fast way
+### API for fast way
 
-But fortunately all this actions are automated and you don't need to repeat it every time, when cookies are outdated. So, for load Strava Heatmap without authorization you can just send simple GET request to API of AnyGIS Server:
+But fortunately all this actions are automated and you don't need to repeat it every time, when cookies are outdated. So, for load Strava Heatmap without authorization you can just send simple GET request to API of AnyGIS Server and immediately download ready tile. You can use one of this reauests:
 
 
 [GET http://anygis.herokuapp.com/Tracks_Strava_All/{x}/{y}/{z}](http://anygis.herokuapp.com/Tracks_Strava_All/681/1562/12)
