@@ -7,15 +7,15 @@ Supporting script for [AnyGIS Server][00]. It need to scrapping Strava authoriza
 To load Strava Heatmap without authorization you can send GET request to API of AnyGIS Server:
 
 
-[http://anygis.herokuapp.com/Tracks_Strava_All/{x}/{y}/{z}](http://anygis.herokuapp.com/Tracks_Strava_All/56.103490/37.700556/13)
+[http://anygis.herokuapp.com/Tracks_Strava_All/{x}/{y}/{z}](http://anygis.herokuapp.com/Tracks_Strava_All/681/1562/12)
 
-[http://anygis.herokuapp.com/Tracks_Strava_Ride/{x}/{y}/{z}](http://anygis.herokuapp.com/Tracks_Strava_Ride/56.103490/37.700556/13)
+[http://anygis.herokuapp.com/Tracks_Strava_Ride/{x}/{y}/{z}](http://anygis.herokuapp.com/Tracks_Strava_Ride/681/1562/12)
 
-[http://anygis.herokuapp.com/Tracks_Strava_Run/{x}/{y}/{z}](http://anygis.herokuapp.com/Tracks_Strava_Run/56.103490/37.700556/13)
+[http://anygis.herokuapp.com/Tracks_Strava_Run/{x}/{y}/{z}](http://anygis.herokuapp.com/Tracks_Strava_Run/681/1562/12)
 
-[http://anygis.herokuapp.com/Tracks_Strava_Water/{x}/{y}/{z}](http://anygis.herokuapp.com/Tracks_Strava_Water/56.103490/37.700556/13)
+[http://anygis.herokuapp.com/Tracks_Strava_Water/{x}/{y}/{z}](http://anygis.herokuapp.com/Tracks_Strava_Water/681/1562/12)
 
-[http://anygis.herokuapp.com/Tracks_Strava_Winter/{x}/{y}/{z}](http://anygis.herokuapp.com/Tracks_Strava_Winter/56.103490/37.700556/13)
+[http://anygis.herokuapp.com/Tracks_Strava_Winter/{x}/{y}/{z}](http://anygis.herokuapp.com/Tracks_Strava_Winter/681/1562/12)
 
 
 
