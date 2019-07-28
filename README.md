@@ -43,5 +43,16 @@ But fortunately all this actions are automated and you don't need to repeat it e
 [GET http://anygis.herokuapp.com/Tracks_Strava_Winter/{x}/{y}/{z}](http://anygis.herokuapp.com/Tracks_Strava_Winter/681/1562/12)
 
 
+[GET http://anygis.herokuapp.com/Tracks_Strava_All_Bluered/{x}/{y}/{z}](http://anygis.herokuapp.com/Tracks_Strava_All_Bluered/681/1562/12)
+
+[GET http://anygis.herokuapp.com/Tracks_Strava_Ride_Bluered/{x}/{y}/{z}](http://anygis.herokuapp.com/Tracks_Strava_Ride_Bluered/681/1562/12)
+
+[GET http://anygis.herokuapp.com/Tracks_Strava_Run_Bluered/{x}/{y}/{z}](http://anygis.herokuapp.com/Tracks_Strava_Run_Bluered/681/1562/12)
+
+[GET http://anygis.herokuapp.com/Tracks_Strava_Water_Bluered/{x}/{y}/{z}](http://anygis.herokuapp.com/Tracks_Strava_Water_Bluered/681/1562/12)
+
+[GET http://anygis.herokuapp.com/Tracks_Strava_Winter_Bluered/{x}/{y}/{z}](http://anygis.herokuapp.com/Tracks_Strava_Winter_Bluered/681/1562/12)
+
+
 
 [00]: https://github.com/nnngrach/AnyGIS_server
