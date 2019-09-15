@@ -31,6 +31,7 @@ In another way you can parse cookie and add some values from it to your URL requ
 
 But fortunately all this actions are automated and you don't need to repeat it every time, when cookies are outdated. So, for load Strava Heatmap without authorization you can just send simple GET request to API of AnyGIS Server and immediately download ready tile. You can use one of this requests:
 
+Hot style:
 
 [GET https://anygis.ru/api/v1/Tracks_Strava_All/{x}/{y}/{z}](https://anygis.ru/api/v1/Tracks_Strava_All/681/1562/12)
 
@@ -43,6 +44,8 @@ But fortunately all this actions are automated and you don't need to repeat it e
 [GET https://anygis.ru/api/v1/Tracks_Strava_Winter/{x}/{y}/{z}](https://anygis.ru/api/v1/Tracks_Strava_Winter/681/1562/12)
 
 
+Blue-red style:
+
 [GET https://anygis.ru/api/v1/Tracks_Strava_All_Bluered/{x}/{y}/{z}](https://anygis.ru/api/v1/Tracks_Strava_All_Bluered/681/1562/12)
 
 [GET https://anygis.ru/api/v1/Tracks_Strava_Ride_Bluered/{x}/{y}/{z}](https://anygis.ru/api/v1/Tracks_Strava_Ride_Bluered/681/1562/12)
@@ -54,5 +57,6 @@ But fortunately all this actions are automated and you don't need to repeat it e
 [GET https://anygis.ru/api/v1/Tracks_Strava_Winter_Bluered/{x}/{y}/{z}](https://anygis.ru/api/v1/Tracks_Strava_Winter_Bluered/681/1562/12)
 
 
+Tiles available from 0 to 16 zoom level.
 
 [00]: https://github.com/nnngrach/AnyGIS_server
