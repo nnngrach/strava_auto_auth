@@ -32,26 +32,26 @@ In another way you can parse cookie and add some values from it to your URL requ
 But fortunately all this actions are automated and you don't need to repeat it every time, when cookies are outdated. So, for load Strava Heatmap without authorization you can just send simple GET request to API of AnyGIS Server and immediately download ready tile. You can use one of this requests:
 
 
-[GET http://anygis.herokuapp.com/Tracks_Strava_All/{x}/{y}/{z}](http://anygis.herokuapp.com/Tracks_Strava_All/681/1562/12)
+[GET https://anygis.ru/api/v1/Tracks_Strava_All/{x}/{y}/{z}](https://anygis.ru/api/v1/Tracks_Strava_All/681/1562/12)
 
-[GET http://anygis.herokuapp.com/Tracks_Strava_Ride/{x}/{y}/{z}](http://anygis.herokuapp.com/Tracks_Strava_Ride/681/1562/12)
+[GET https://anygis.ru/api/v1/Tracks_Strava_Ride/{x}/{y}/{z}](https://anygis.ru/api/v1/Tracks_Strava_Ride/681/1562/12)
 
-[GET http://anygis.herokuapp.com/Tracks_Strava_Run/{x}/{y}/{z}](http://anygis.herokuapp.com/Tracks_Strava_Run/681/1562/12)
+[GET https://anygis.ru/api/v1/Tracks_Strava_Run/{x}/{y}/{z}](https://anygis.ru/api/v1/Tracks_Strava_Run/681/1562/12)
 
-[GET http://anygis.herokuapp.com/Tracks_Strava_Water/{x}/{y}/{z}](http://anygis.herokuapp.com/Tracks_Strava_Water/681/1562/12)
+[GET https://anygis.ru/api/v1/Tracks_Strava_Water/{x}/{y}/{z}](https://anygis.ru/api/v1/Tracks_Strava_Water/681/1562/12)
 
-[GET http://anygis.herokuapp.com/Tracks_Strava_Winter/{x}/{y}/{z}](http://anygis.herokuapp.com/Tracks_Strava_Winter/681/1562/12)
+[GET https://anygis.ru/api/v1/Tracks_Strava_Winter/{x}/{y}/{z}](https://anygis.ru/api/v1/Tracks_Strava_Winter/681/1562/12)
 
 
-[GET http://anygis.herokuapp.com/Tracks_Strava_All_Bluered/{x}/{y}/{z}](http://anygis.herokuapp.com/Tracks_Strava_All_Bluered/681/1562/12)
+[GET https://anygis.ru/api/v1/Tracks_Strava_All_Bluered/{x}/{y}/{z}](https://anygis.ru/api/v1/Tracks_Strava_All_Bluered/681/1562/12)
 
-[GET http://anygis.herokuapp.com/Tracks_Strava_Ride_Bluered/{x}/{y}/{z}](http://anygis.herokuapp.com/Tracks_Strava_Ride_Bluered/681/1562/12)
+[GET https://anygis.ru/api/v1/Tracks_Strava_Ride_Bluered/{x}/{y}/{z}](https://anygis.ru/api/v1/Tracks_Strava_Ride_Bluered/681/1562/12)
 
-[GET http://anygis.herokuapp.com/Tracks_Strava_Run_Bluered/{x}/{y}/{z}](http://anygis.herokuapp.com/Tracks_Strava_Run_Bluered/681/1562/12)
+[GET https://anygis.ru/api/v1/Tracks_Strava_Run_Bluered/{x}/{y}/{z}](https://anygis.ru/api/v1/Tracks_Strava_Run_Bluered/681/1562/12)
 
-[GET http://anygis.herokuapp.com/Tracks_Strava_Water_Bluered/{x}/{y}/{z}](http://anygis.herokuapp.com/Tracks_Strava_Water_Bluered/681/1562/12)
+[GET https://anygis.ru/api/v1/Tracks_Strava_Water_Bluered/{x}/{y}/{z}](https://anygis.ru/api/v1/Tracks_Strava_Water_Bluered/681/1562/12)
 
-[GET http://anygis.herokuapp.com/Tracks_Strava_Winter_Bluered/{x}/{y}/{z}](http://anygis.herokuapp.com/Tracks_Strava_Winter_Bluered/681/1562/12)
+[GET https://anygis.ru/api/v1/Tracks_Strava_Winter_Bluered/{x}/{y}/{z}](https://anygis.ru/api/v1/Tracks_Strava_Winter_Bluered/681/1562/12)
 
 
 
