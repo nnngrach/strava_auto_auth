@@ -1,35 +1,13 @@
-# strava_auto_auth
+# AnyGIS Strava auto authorization tool
 
-Supporting script for [AnyGIS Server][00]. It need to scrapping Strava authorization cookies for loading Strava Heatmap. For browser emulation it using Headless Chrome, which deployed on Apify.com platform.
+Supporting script for [AnyGIS Server][00]. It need to scrapping Strava authorization cookies for loading Strava Heatmap without authorization on hight zoom level. It can be useful for mobile navigation apps, which can't log in with Strava web site. 
 
-### API for full way
-
-To get Strava auth cookies you have to send POST request to my script on Apify.com:
-
-`POST https://api.apify.com/v2/acts/nnngrach~strava-auth/run-sync?token=ATnnxbF6sE7zEZDmMbZTTppKo`
-
-In the body of this request add a JSON with your email and password. Mime type is (application/json).
-
-`{ "email": "your_nick@gmail.com" , "password": "Your_Password" }`
+For browser emulation this scrip using Headless Chrome, managed with Puppeteer Node.js library.
 
 
-This sctipt will works about 2 minutes. After that you'll get a response message. Now you can download fetched cookie-file. To do this you have to set GET request:
+### API
 
-`GET https://api.apify.com/v2/acts/nnngrach~strava-auth/runs/last/dataset/items?token=ATnnxbF6sE7zEZDmMbZTTppKo`
-
-
-To load Strava Heatmap tile you have two ways. At first you can add this cookie to your GET request:
-
-`GET https://heatmap-external-{abc}.strava.com/tiles-auth/all/hot/{z}/{x}/{y}.png?px=256`
-
-In another way you can parse cookie and add some values from it to your URL request. You need next values: CloudFront-Signature, CloudFront-Key-Pair-Id, CloudFront-Policy.
-
-`GET https://heatmap-external-{abc}.strava.com/tiles-auth/all/hot/{z}/{x}/{y}.png?px=256&Signature={CloudFront-Signature}&Key-Pair-Id={CloudFront-Key-Pair-Id}&Policy={CloudFront-Policy}`
-
-
-### API for fast way
-
-But fortunately all this actions are automated and you don't need to repeat it every time, when cookies are outdated. So, for load Strava Heatmap without authorization you can just send simple GET request to API of AnyGIS Server and immediately download ready tile. You can use one of this requests:
+For loading Strava Heatmap without authorization you can just send simple GET request to API of AnyGIS Server and immediately download ready tile. You can use one of this requests(The script uses my personal login and password):
 
 Hot style:
 
@@ -58,5 +36,25 @@ Blue-red style:
 
 
 Tiles available from 0 to 16 zoom level.
+
+
+
+
+### About this script
+
+To get RAW Strava auth cookies you can deploy this script in any hosthing. And send to it GET request with your Strava login and password. Like this:
+
+`GET http://68.183.65.138:5050/StravaAuth/MyLogin/MyPassword`
+
+
+This sctipt can work up to 1 minute. After that you'll get a response message with JSON with all cookies data.
+
+To load Strava Heatmap tile you have two ways. At first you can add this json ad cookie to your GET request for heatmap tile:
+
+`GET https://heatmap-external-{abc}.strava.com/tiles-auth/all/hot/{z}/{x}/{y}.png?px=256`
+
+In another way you can parse json and add some values from it to your URL request. You need next values: CloudFront-Signature, CloudFront-Key-Pair-Id, CloudFront-Policy.
+
+`GET https://heatmap-external-{abc}.strava.com/tiles-auth/all/hot/{z}/{x}/{y}.png?px=256&Signature={CloudFront-Signature}&Key-Pair-Id={CloudFront-Key-Pair-Id}&Policy={CloudFront-Policy}`
 
 [00]: https://github.com/nnngrach/AnyGIS_server

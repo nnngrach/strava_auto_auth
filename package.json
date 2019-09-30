@@ -1,0 +1,32 @@
+{
+  "name": "Strava_auther",
+  "version": "0.0.1",
+  "description": "Get tile of online map vievers by taking a screenshot",
+  "engines": {
+    "node": "12.x"
+  },
+  "main": "App/Main.js",
+  "scripts": {
+    "start": "node --experimental-worker App/Main.js",
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "node-worker-threads-pool": "^1.0.7",
+    "puppeteer": "^1.18.1"
+  },
+  "devDependencies": {
+    "request": "^2.81.0",
+    "tape": "^4.11.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/heroku/node-js-getting-started"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ],
+  "license": "MIT"
+}

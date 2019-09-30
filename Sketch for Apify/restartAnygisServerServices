@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Resrart Router
+cd /home/nnngrach/anygis_router/AnyGIS_server
+# /usr/local/bin/vapor build
+echo "Horobritt@_42" | sudo -S    sudo systemctl reload supervisor
+
+# Restart Site
+cd /home/nnngrach/anygis_site/AnyGIS_Site
+pkill -f /home/nnngrach/gems/bin/jekyll
+/home/nnngrach/gems/bin/bundle  exec /home/nnngrach/gems/bin/jekyll  serve --detach
+
+echo "Anygis cronetab restarting DONE"
