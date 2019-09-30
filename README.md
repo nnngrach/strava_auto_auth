@@ -42,16 +42,23 @@ Tiles available from 0 to 16 zoom level.
 
 ### About this script
 
-To get RAW Strava auth cookies you can deploy this script in any hosthing. And send to it GET request with your Strava login and password. Like this:
+To get RAW Strava auth cookies you can deploy this script in any hosthing what you like. You can use my docker container for it:
+
+`docker run --name anygis_strava_auto_auth --rm -p 5050:4000 -d nnngrach/anygis_strava_auto_auth`
+
+
+After that send to it GET request with your Strava login and password. Like this:
 
 `GET http://68.183.65.138:5050/StravaAuth/MyLogin/MyPassword`
 
 
-This sctipt can work up to 1 minute. After that you'll get a response message with JSON with all cookies data.
+This script can work up to 1 minute. After that you'll get a response message with JSON with all cookies data.
+
 
 To load Strava Heatmap tile you have two ways. At first you can add this json ad cookie to your GET request for heatmap tile:
 
 `GET https://heatmap-external-{abc}.strava.com/tiles-auth/all/hot/{z}/{x}/{y}.png?px=256`
+
 
 In another way you can parse json and add some values from it to your URL request. You need next values: CloudFront-Signature, CloudFront-Key-Pair-Id, CloudFront-Policy.
 
