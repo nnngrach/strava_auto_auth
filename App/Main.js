@@ -1,11 +1,23 @@
 const express = require( 'express' )
+const rateLimit = require('express-rate-limit')
 const stravaAuther = require( './StravaAuther/StravaAuther' )
-
 
 
 // Запуск сервера
 const PORT = process.env.PORT || 4000
 const app = express()
+
+
+// Ограничить количество одновременных подключений до 1 в минуту
+// чтобы не запустилось сразу несколько Chrome, которые забьют всю память
+const limiter = rateLimit({
+  windowMs: 2 * 60 * 1000,
+  max: 1 
+})
+ 
+app.use(limiter);
+
+
 
 app.listen( PORT, () => {
   console.log( 'Listening on port ', PORT )
@@ -18,9 +30,9 @@ app.get( '/', async ( req, res, next ) => {
 })
 
 
-
 // Пройти авторизацию на Strava и получить cookie
-app.get( '/StravaAuth/:login/:password/', async ( req, res, next ) => {
+app.get( '/StravaAuth/:login/:password/', async ( req, res, next ) => {	
+
   const login = req.params.login
   const password = req.params.password
   if ( !login ) return next( error( 400, 'No login paramerer' ) )
