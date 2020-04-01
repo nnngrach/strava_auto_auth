@@ -7,7 +7,7 @@ For browser emulation this scrip using Headless Chrome, managed with Puppeteer N
 
 ### API (Example of working service)
 
-For loading Strava Heatmap without authorization you can just send simple GET request to API of AnyGIS Server and immediately download ready tile. You can use one of this requests(The script uses my personal login and password):
+For loading Strava Heatmap without authorization you can just send simple GET request to API of AnyGIS Server and immediately download ready tile. You can use one of this requests (The script uses my personal login and password):
 
 Hot style:
 
@@ -50,25 +50,25 @@ To get RAW Strava auth cookies you can deploy this script in any hosting what yo
 ### Fetching session cookies
 
 
-After that send to it GET request with your Strava login and password. Like this:
+Send to working container GET request with your Strava login and password. Like this:
 
 `GET http://68.183.65.138:5050/StravaAuth/MyLogin/MyPassword`
 
 
-This script can work up to 1 minute. After that you'll get a response message with JSON with all cookies data. Save them to persistent storage. And use this for loading tiles. And when the current session expires and these cookies are no longer valid just request them again.
+This script can work up to 1 minute. After that you'll get a response message with JSON with all cookies data. Save them to persistent storage. And use this for loading tiles later. And when the current session expires and these cookies are no longer valid just request new cookies again.
 
 
 
 ### Loading tiles with cookies
 
-To load Strava Heatmap tile you have two ways. At first you can add this JSON at cookie to your GET request for Strava Heatmap tile. Here is the URL template for this request:
+To load Strava Heatmap tile you have two ways. At first you can add whole received JSON at cookie to your GET request for Strava Heatmap tile. Here is the URL template for this request:
 
 `GET https://heatmap-external-{abc}.strava.com/tiles-auth/all/hot/{z}/{x}/{y}.png?px=256`
 
 
 ### Loading tiles with HTTP parameters
 
-In another way you can parse JSON and fetch some values from it. Add fetched values as parameters of your URL request. You need to extract next values: CloudFront-Signature, CloudFront-Key-Pair-Id, CloudFront-Policy. Here is the URL template for this request:
+In another way you can parse JSON and fetch some values from it. And add fetched values as parameters of your URL request. You need to extract next values: CloudFront-Signature, CloudFront-Key-Pair-Id, CloudFront-Policy. Here is the URL template for this request:
 
 `GET https://heatmap-external-{abc}.strava.com/tiles-auth/all/hot/{z}/{x}/{y}.png?px=256&Signature={CloudFront-Signature}&Key-Pair-Id={CloudFront-Key-Pair-Id}&Policy={CloudFront-Policy}`
 
