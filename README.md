@@ -5,7 +5,7 @@ Supporting script for [AnyGIS Server][00]. It need to scrapping Strava authoriza
 For browser emulation this scrip using Headless Chrome, managed with Puppeteer Node.js library.
 
 
-### API - Example of working service
+### API (Example of working service)
 
 For loading Strava Heatmap without authorization you can just send simple GET request to API of AnyGIS Server and immediately download ready tile. You can use one of this requests(The script uses my personal login and password):
 
@@ -39,7 +39,7 @@ Tiles available from 0 to 16 zoom level.
 
 
 
-### Instalation
+### Installation
 
 To get RAW Strava auth cookies you can deploy this script in any hosting what you like. You can use my docker container for it:
 
