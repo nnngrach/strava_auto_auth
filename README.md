@@ -22,17 +22,15 @@ Hot style:
 [GET https://anygis.ru/api/v1/Tracks_Strava_Winter/{x}/{y}/{z}](https://anygis.ru/api/v1/Tracks_Strava_Winter/681/1562/12)
 
 
-Blue-red style:
+
+Other styles:
+
+[GET https://anygis.ru/api/v1/Tracks_Strava_All_Blue/{x}/{y}/{z}](https://anygis.ru/api/v1/Tracks_Strava_All_Blue/681/1562/12)
 
 [GET https://anygis.ru/api/v1/Tracks_Strava_All_Bluered/{x}/{y}/{z}](https://anygis.ru/api/v1/Tracks_Strava_All_Bluered/681/1562/12)
 
-[GET https://anygis.ru/api/v1/Tracks_Strava_Ride_Bluered/{x}/{y}/{z}](https://anygis.ru/api/v1/Tracks_Strava_Ride_Bluered/681/1562/12)
+[GET https://anygis.ru/api/v1/Tracks_Strava_All_Gray/{x}/{y}/{z}](https://anygis.ru/api/v1/Tracks_Strava_All_Gray/681/1562/12)
 
-[GET https://anygis.ru/api/v1/Tracks_Strava_Run_Bluered/{x}/{y}/{z}](https://anygis.ru/api/v1/Tracks_Strava_Run_Bluered/681/1562/12)
-
-[GET https://anygis.ru/api/v1/Tracks_Strava_Water_Bluered/{x}/{y}/{z}](https://anygis.ru/api/v1/Tracks_Strava_Water_Bluered/681/1562/12)
-
-[GET https://anygis.ru/api/v1/Tracks_Strava_Winter_Bluered/{x}/{y}/{z}](https://anygis.ru/api/v1/Tracks_Strava_Winter_Bluered/681/1562/12)
 
 
 Tiles available from 0 to 16 zoom level.
