@@ -47,9 +47,12 @@ app.get( '/:z/:x/:y/:mode/:color', async ( req, res, next ) => {
   if ( !color ) return next( error( 400, 'No color paramerer' ) )
 
   let urlWithAuthParams = await auther.getStravaTileUrl(z, x, y, mode, color)
-  let imageDownloadResult = await auther.getContent(urlWithAuthParams)
-  makeResponseFrom(imageDownloadResult, res,next)
- // res.redirect(url)
+
+  if (!urlWithAuthParams.isError) {
+    res.redirect(urlWithAuthParams.data)
+  } else {
+    res.status(500).send('Internal script error');
+  }
 })
 
 app.get( '/StravaAuth/:login/:password/', async ( req, res, next ) => {

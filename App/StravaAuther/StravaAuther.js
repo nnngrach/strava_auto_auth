@@ -10,24 +10,40 @@ let isScraperIdle = true;
 
 async function getStravaTileUrl(z=13, x=4953, y=2546, mode='all', color='hot') {
     let url = ''
-    if (z <= 12) {
+    if (z < 12) {
         url = createDirectURL(z, x, y, mode, color)
     } else {
         let authParams = ''
+
         let storedAuthParamsObject = storage.load(AUTH_PARAMS_KEY)
-        if ( !storedAuthParamsObject.isError ) {
-            const isOutdated = await isAuthParamsOutdated( defaultUrlForPinging( storedAuthParamsObject.data ) )
+        if ( !storedAuthParamsObject.isError &&
+            typeof storedAuthParamsObject.data !== 'undefined' &&
+            storedAuthParamsObject.data ) {
+
+            const defaultUrl = defaultUrlForPinging( storedAuthParamsObject.data )
+            const isOutdated = await isAuthParamsOutdated( defaultUrl )
             if ( !isOutdated ) {
                 authParams = storedAuthParamsObject.data
             } else {
-                authParams = await updateAuthParams()
+                authParams = null
             }
         } else {
-            authParams = await updateAuthParams()
+            authParams = null
         }
+
+        if (!authParams) {
+            let authParamsObject = await updateAuthParams()
+            if (!authParamsObject.isError) {
+                authParams = authParamsObject.data
+            } else {
+                return {isError: true, data: null}
+            }
+        }
+
         url = createURLWithAuthParams(z, x, y, mode, color, authParams)
     }
-    return url
+
+    return {isError: false, data: url}
 }
 
 async function isAuthParamsOutdated(testHiResTileURL) {
@@ -61,6 +77,7 @@ async function getContent(url) {
     return await axios
         .get(url, options)
         .then(function (response) {
+            console.log('Download ok - ', url)
             const buffer = Buffer.from( response.data, 'base64' )
             return { isError: false, data: buffer}
         })
@@ -80,7 +97,9 @@ async function updateAuthParams() {
         let newAuthParams = cookieParser.parse( authedCookies )
         storage.save(AUTH_PARAMS_KEY, newAuthParams)
         isScraperIdle = true
-        return newAuthParams
+        return {isError:false, data:newAuthParams}
+    } else {
+        return {isError:true, data:null}
     }
 }
 

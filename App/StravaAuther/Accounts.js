@@ -1,5 +1,5 @@
 const accounts = [
-    'anygis0000+1@gmail.com',
+    'anygis0000+0@gmail.com',
     'anygis0000+2@gmail.com',
     'anygis0000+3@gmail.com'
 ]
