@@ -8,10 +8,10 @@ const AUTH_PARAMS_KEY = 'AUTH_PARAMS_KEY'
 
 let isScraperIdle = true;
 
-async function getStravaTileUrl(z=13, x=4953, y=2546, mode='all', color='hot') {
+async function getStravaTileUrl(z, x, y, size, mode, color) {
     let url = ''
     if (z < 12) {
-        url = createDirectURL(z, x, y, mode, color)
+        url = createDirectURL(z, x, y, size, mode, color)
     } else {
         let authParams = ''
 
@@ -20,7 +20,7 @@ async function getStravaTileUrl(z=13, x=4953, y=2546, mode='all', color='hot') {
             typeof storedAuthParamsObject.data !== 'undefined' &&
             storedAuthParamsObject.data ) {
 
-            const defaultUrl = defaultUrlForPinging( storedAuthParamsObject.data )
+            const defaultUrl = defaultUrlForPinging( size, storedAuthParamsObject.data )
             const isOutdated = await isAuthParamsOutdated( defaultUrl )
             if ( !isOutdated ) {
                 authParams = storedAuthParamsObject.data
@@ -40,7 +40,7 @@ async function getStravaTileUrl(z=13, x=4953, y=2546, mode='all', color='hot') {
             }
         }
 
-        url = createURLWithAuthParams(z, x, y, mode, color, authParams)
+        url = createURLWithAuthParams(z, x, y, size, mode, color, authParams)
     }
 
     return {isError: false, data: url}
@@ -103,16 +103,16 @@ async function updateAuthParams() {
     }
 }
 
-function createDirectURL(z, x, y, mode, color) {
-    return `https://heatmap-external-a.strava.com/tiles/${mode}/${color}/${z}/${x}/${y}.png?px=512`
+function createDirectURL(z, x, y, size, mode, color) {
+    return `https://heatmap-external-a.strava.com/tiles/${mode}/${color}/${z}/${x}/${y}.png?px=${size}`
 }
 
-function createURLWithAuthParams(z, x, y, mode, color, authParams) {
-    return `https://heatmap-external-a.strava.com/tiles-auth/${mode}/${color}/${z}/${x}/${y}.png?px=512${authParams}`
+function createURLWithAuthParams(z, x, y, size, mode, color, authParams) {
+    return `https://heatmap-external-a.strava.com/tiles-auth/${mode}/${color}/${z}/${x}/${y}.png?px=${size}${authParams}`
 }
 
-function defaultUrlForPinging(authParams) {
-    return createURLWithAuthParams(13, 4953, 2546, 'all', 'hot', authParams)
+function defaultUrlForPinging(size, authParams) {
+    return createURLWithAuthParams(13, 4953, 2546, size, 'all', 'hot', authParams)
 }
 
 

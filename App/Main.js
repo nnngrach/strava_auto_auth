@@ -33,20 +33,22 @@ app.get( '/', async ( req, res, next ) => {
 // })
 
 // Редирект на URL тайла с параметрами сессии
-app.get( '/:z/:x/:y/:mode/:color', async ( req, res, next ) => {
+app.get( '/:z/:x/:y/:size/:mode/:color', async ( req, res, next ) => {
   const z = req.params.z
   const x = req.params.x
   const y = req.params.y
+  const size = req.params.size
   const mode = req.params.mode
   const color = req.params.color
 
   if ( !isInt( z )) return next( error( 400, 'Z must must be Intager' ))
   if ( !isInt( x )) return next( error( 400, 'X must must be Intager' ))
   if ( !isInt( y )) return next( error( 400, 'Y must must be Intager' ))
+  if ( !isInt( size )) return next( error( 400, 'size must must be Intager' ))
   if ( !mode ) return next( error( 400, 'No mode paramerer' ) )
   if ( !color ) return next( error( 400, 'No color paramerer' ) )
 
-  let urlWithAuthParams = await auther.getStravaTileUrl(z, x, y, mode, color)
+  let urlWithAuthParams = await auther.getStravaTileUrl(z, x, y, size, mode, color)
 
   if (!urlWithAuthParams.isError) {
     res.redirect(urlWithAuthParams.data)
