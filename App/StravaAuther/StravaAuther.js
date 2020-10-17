@@ -1,44 +1,78 @@
-const puppeteer = require( 'puppeteer' )
+const axios = require('axios')
+const storage = require( './Storage' )
+const stravaAuther = require( './WebScraper' )
+const cookieParser = require( './CookieParser' )
 
-async function getCookies( login, password) {
+const AUTH_PARAMS_KEY = 'AUTH_PARAMS_KEY'
 
-  const herokuDeploymentParams = {'args' : ['--no-sandbox', '--disable-setuid-sandbox']}
-  const browser = await puppeteer.launch(herokuDeploymentParams)
+let isScraperIdle = true;
 
-  console.log('Browser start')
-
-  // Авторизация на  www.strava.com/login
-  const page1 = await browser.newPage()
-  await page1.setViewport({width: 1280, height: 1024})
-  await page1.goto('https://www.strava.com/login', {waitUntil: 'networkidle2'})
-  await page1.waitForSelector('form')
-  await page1.type('input#email', login)
-  await page1.type('input#password', password)
-  await page1.waitFor(200)
-  await page1.evaluate(()=>document
-    .querySelector('button#login-button')
-    .click()
-  )
-  await page1.waitForNavigation()
-
-  // Извлекаем _strava4_session cookie
-  const sessionFourCookie = await page1.cookies()
-  //console.log(sessionFourCookie)
-  //console.log("================================")
-
-  // Авторизация на heatmap-external-a.strava.com/auth
-  const page2 = await browser.newPage()
-  await page2.setCookie(...sessionFourCookie)
-  await page2.goto('https://heatmap-external-a.strava.com/auth')
-
-  // Извлекаем дополненные CloudFront cookies
-  const cloudfontCookie = await page2.cookies()
-  //console.log(cloudfontCookie)
-
-  console.log('Browser end')
-
-  await browser.close()
-  return cloudfontCookie
+async function getStravaTileUrl(z=13, x=4953, y=2546, mode='all', color='hot') {
+    let url = ''
+    if (z <= 12) {
+        url = createDirectURL(z, x, y, mode, color)
+    } else {
+        let authParams = ''
+        let storedAuthParamsObject = storage.load(AUTH_PARAMS_KEY)
+        if ( !storedAuthParamsObject.isError ) {
+            const isOutdated = await isAuthParamsOutdated( defaultUrlForPinging( storedAuthParamsObject.data ) )
+            if ( !isOutdated ) {
+                authParams = storedAuthParamsObject.data
+            } else {
+                authParams = await updateAuthParams()
+            }
+        } else {
+            authParams = await updateAuthParams()
+        }
+        url = createURLWithAuthParams(z, x, y, mode, color, authParams)
+    }
+    return url
 }
 
-module.exports.getCookies = getCookies
+async function isAuthParamsOutdated(testHiResTileURL) {
+    const options = {
+        headers: {
+            'User-Agent': 'PostmanRuntime/7.26.5',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Connection' : 'keep-alive'
+        }
+    }
+    return await axios
+        .head(testHiResTileURL, options)
+        .then(function (response) {
+            return response.status != 200
+        })
+        .catch(function (error) {
+            console.log('Pinging error - ', testHiResTileURL, error)
+            return true;
+        })
+}
+
+async function updateAuthParams() {
+    const login = 'anygis0000+1@gmail.com'
+    const password = 'AnyG15server'
+
+    if (isScraperIdle) {
+        isScraperIdle = false
+        const authedCookies = await stravaAuther.getCookies( login, password)
+        let newAuthParams = cookieParser.parse( authedCookies )
+        storage.save(AUTH_PARAMS_KEY, newAuthParams)
+        isScraperIdle = true
+        return newAuthParams
+    }
+}
+
+function createDirectURL(z, x, y, mode, color) {
+    return `https://heatmap-external-a.strava.com/tiles/${mode}/${color}/${z}/${x}/${y}.png?px=512`
+}
+
+function createURLWithAuthParams(z, x, y, mode, color, authParams) {
+    return `https://heatmap-external-a.strava.com/tiles-auth/${mode}/${color}/${z}/${x}/${y}.png?px=512${authParams}`
+}
+
+function defaultUrlForPinging(authParams) {
+    return createURLWithAuthParams(13, 4953, 2546, 'all', 'hot', authParams)
+}
+
+
+module.exports.getStravaTileUrl = getStravaTileUrl

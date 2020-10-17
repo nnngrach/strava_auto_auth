@@ -15,7 +15,9 @@
     "express-queue": "0.0.12",
     "express-rate-limit": "^5.0.0",
     "node-worker-threads-pool": "^1.0.7",
-    "puppeteer": "^1.18.1"
+    "puppeteer": "^1.18.1",
+    "node-cache": "^4.2.1",
+    "axios": "^0.20.0"
   },
   "devDependencies": {
     "request": "^2.81.0",

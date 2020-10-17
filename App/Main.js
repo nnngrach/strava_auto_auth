@@ -1,21 +1,19 @@
 const express = require( 'express' )
 const rateLimit = require('express-rate-limit')
-const stravaAuther = require( './StravaAuther/StravaAuther' )
-
+const auther = require( './StravaAuther/StravaAuther' )
 
 // Запуск сервера
 const PORT = process.env.PORT || 4000
 const app = express()
 
-
 // Ограничить количество одновременных подключений до 1 в минуту
 // чтобы не запустилось сразу несколько Chrome, которые забьют всю память
-const limiter = rateLimit({
-  windowMs: 2 * 60 * 1000,
-  max: 1 
-})
- 
-app.use(limiter);
+// const limiter = rateLimit({
+//   windowMs: 2 * 60 * 1000,
+//   max: 1
+// })
+//
+// app.use(limiter);
 
 
 
@@ -29,16 +27,37 @@ app.get( '/', async ( req, res, next ) => {
   res.end( 'AnyGIS auto authorization script for Strava Hetatmap' )
 })
 
+// app.get( '/TEST/', async ( req, res, next ) => {
 
-// Пройти авторизацию на Strava и получить cookie
-app.get( '/StravaAuth/:login/:password/', async ( req, res, next ) => {	
+//   res.end( 'TEST' )
+// })
+
+// Редирект на URL тайла с параметрами сессии
+app.get( '/:z/:x/:y/:mode/:color', async ( req, res, next ) => {
+  const z = req.params.z
+  const x = req.params.x
+  const y = req.params.y
+  const mode = req.params.mode
+  const color = req.params.color
+
+  if ( !isInt( z )) return next( error( 400, 'Z must must be Intager' ))
+  if ( !isInt( x )) return next( error( 400, 'X must must be Intager' ))
+  if ( !isInt( y )) return next( error( 400, 'Y must must be Intager' ))
+  if ( !mode ) return next( error( 400, 'No mode paramerer' ) )
+  if ( !color ) return next( error( 400, 'No color paramerer' ) )
+
+  let url = await auther.getStravaTileUrl(z, x, y, mode, color)
+  res.redirect(url)
+})
+
+app.get( '/StravaAuth/:login/:password/', async ( req, res, next ) => {
 
   const login = req.params.login
   const password = req.params.password
-  if ( !login ) return next( error( 400, 'No login paramerer' ) )
-  if ( !password ) return next( error( 400, 'No password paramerer' ) )
+  if (!login) return next(error(400, 'No login paramerer'))
+  if (!password) return next(error(400, 'No password paramerer'))
 
-  const authedCookies = await stravaAuther.getCookies( login, password)
+  const authedCookies = await stravaAuther.getCookies(login, password)
   res.json(authedCookies);
 })
 
@@ -49,7 +68,6 @@ function isInt( value ) {
   var x = parseFloat( value )
   return !isNaN( value ) && ( x | 0 ) === x
 }
-
 
 function error( status, msg ) {
   var err = new Error( msg )
