@@ -2,6 +2,7 @@ const axios = require('axios')
 const storage = require( './Storage' )
 const stravaAuther = require( './WebScraper' )
 const cookieParser = require( './CookieParser' )
+const accounts = require( './Accounts' )
 
 const AUTH_PARAMS_KEY = 'AUTH_PARAMS_KEY'
 
@@ -49,8 +50,8 @@ async function isAuthParamsOutdated(testHiResTileURL) {
 }
 
 async function updateAuthParams() {
-    const login = 'anygis0000+1@gmail.com'
-    const password = 'AnyG15server'
+    const login = accounts.getRandomAccount()
+    const password = accounts.getPass()
 
     if (isScraperIdle) {
         isScraperIdle = false

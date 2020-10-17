@@ -51,7 +51,6 @@ app.get( '/:z/:x/:y/:mode/:color', async ( req, res, next ) => {
 })
 
 app.get( '/StravaAuth/:login/:password/', async ( req, res, next ) => {
-
   const login = req.params.login
   const password = req.params.password
   if (!login) return next(error(400, 'No login paramerer'))
