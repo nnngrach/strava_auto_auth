@@ -49,6 +49,27 @@ async function isAuthParamsOutdated(testHiResTileURL) {
         })
 }
 
+async function getContent(url) {
+    const options = {
+        responseType: 'arraybuffer',
+        headers: {
+            'User-Agent': 'PostmanRuntime/7.26.5',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Connection' : 'keep-alive'
+        }
+    }
+    return await axios
+        .get(url, options)
+        .then(function (response) {
+            const buffer = Buffer.from( response.data, 'base64' )
+            return { isError: false, data: buffer}
+        })
+        .catch(function (error) {
+            console.log('Download error - ', url)
+            return { isError: true, data: ""}
+        })
+}
+
 async function updateAuthParams() {
     const login = accounts.getRandomAccount()
     const password = accounts.getPass()
@@ -77,3 +98,4 @@ function defaultUrlForPinging(authParams) {
 
 
 module.exports.getStravaTileUrl = getStravaTileUrl
+module.exports.getContent = getContent

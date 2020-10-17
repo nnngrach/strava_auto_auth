@@ -46,8 +46,10 @@ app.get( '/:z/:x/:y/:mode/:color', async ( req, res, next ) => {
   if ( !mode ) return next( error( 400, 'No mode paramerer' ) )
   if ( !color ) return next( error( 400, 'No color paramerer' ) )
 
-  let url = await auther.getStravaTileUrl(z, x, y, mode, color)
-  res.redirect(url)
+  let urlWithAuthParams = await auther.getStravaTileUrl(z, x, y, mode, color)
+  let imageDownloadResult = await auther.getContent(urlWithAuthParams)
+  makeResponseFrom(imageDownloadResult, res,next)
+ // res.redirect(url)
 })
 
 app.get( '/StravaAuth/:login/:password/', async ( req, res, next ) => {
@@ -62,6 +64,25 @@ app.get( '/StravaAuth/:login/:password/', async ( req, res, next ) => {
 
 
 // Вспомогательные функции
+
+function makeResponseFrom(result, res, next) {
+
+  if (result.isError) {
+
+    return next( error( 500, 'Error with downloading tile' ) )
+
+  } else {
+
+    const imageBuffer = result.data
+
+    res.writeHead( 200, {
+      'Content-Type': 'image/png',
+      'Content-Length': imageBuffer.length
+    })
+
+    return res.end(imageBuffer)
+  }
+}
 
 function isInt( value ) {
   var x = parseFloat( value )

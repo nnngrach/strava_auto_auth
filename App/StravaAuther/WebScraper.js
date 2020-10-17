@@ -5,7 +5,7 @@ async function getCookies( login, password) {
   const herokuDeploymentParams = {'args' : ['--no-sandbox', '--disable-setuid-sandbox']}
   const browser = await puppeteer.launch(herokuDeploymentParams)
 
-  console.log('Browser start')
+  // console.log('Browser start')
 
   // Авторизация на  www.strava.com/login
   const page1 = await browser.newPage()
@@ -35,7 +35,7 @@ async function getCookies( login, password) {
   const cloudfontCookie = await page2.cookies()
   //console.log(cloudfontCookie)
 
-  console.log('Browser end')
+  // console.log('Browser end')
 
   await browser.close()
   return cloudfontCookie
