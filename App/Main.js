@@ -8,12 +8,12 @@ const app = express()
 
 // Ограничить количество одновременных подключений до 1 в минуту
 // чтобы не запустилось сразу несколько Chrome, которые забьют всю память
-// const limiter = rateLimit({
-//   windowMs: 2 * 60 * 1000,
-//   max: 1
-// })
-//
-// app.use(limiter);
+const limiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 1
+})
+
+app.use(limiter);
 
 
 
@@ -63,8 +63,9 @@ app.get( '/StravaAuth/:login/:password/', async ( req, res, next ) => {
   if (!login) return next(error(400, 'No login paramerer'))
   if (!password) return next(error(400, 'No password paramerer'))
 
-  const authedCookies = await stravaAuther.getCookies(login, password)
-  res.json(authedCookies);
+  const authedCookies = await auther.fetchAuthParams(login, password)
+  res.end(authedCookies.data)
+  // res.json(authedCookies);
 })
 
 

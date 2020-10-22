@@ -59,3 +59,8 @@ typings/
 
 # next.js build output
 .next
+01_login_page_loaded.png
+02_login_and_password_inserted.png
+03_redirected_to_new_page.png
+05_redirected_to_heatmap_page.png
+04_redirected_to_heatmap_page.png

@@ -13,6 +13,7 @@ async function getStravaTileUrl(z, x, y, size, mode, color) {
     if (z < 12) {
         url = createDirectURL(z, x, y, size, mode, color)
     } else {
+        console.log('-------')
         let authParams = ''
 
         let storedAuthParamsObject = storage.load(AUTH_PARAMS_KEY)
@@ -23,26 +24,38 @@ async function getStravaTileUrl(z, x, y, size, mode, color) {
             const defaultUrl = defaultUrlForPinging( size, storedAuthParamsObject.data )
             const isOutdated = await isAuthParamsOutdated( defaultUrl )
             if ( !isOutdated ) {
+                console.log('not outdated')
                 authParams = storedAuthParamsObject.data
             } else {
+                console.log('is outdated')
                 authParams = null
             }
         } else {
+            console.log('storedAuthParamsObject error')
             authParams = null
         }
 
         if (!authParams) {
-            let authParamsObject = await updateAuthParams()
+            console.log('not authParams')
+            let authParamsObject = await fetchAuthParamsWithRandomAccount()
             if (!authParamsObject.isError) {
-                authParams = authParamsObject.data
+                if (authParamsObject.data !== '') {
+                    authParams = authParamsObject.data
+                    console.log('authParams ok')
+                    console.log(authParams)
+                } else {
+                    console.log('parsed cookies is empty')
+                    return {isError: true, data: null}
+                }
             } else {
+                console.log('authParams error')
                 return {isError: true, data: null}
             }
         }
 
         url = createURLWithAuthParams(z, x, y, size, mode, color, authParams)
     }
-
+    console.log(url)
     return {isError: false, data: url}
 }
 
@@ -87,10 +100,12 @@ async function getContent(url) {
         })
 }
 
-async function updateAuthParams() {
-    const login = accounts.getRandomAccount()
-    const password = accounts.getPass()
+async function fetchAuthParamsWithRandomAccount()
+{
+    return fetchAuthParams(accounts.getRandomAccount(), accounts.getPass())
+}
 
+async function fetchAuthParams(login, password) {
     if (isScraperIdle) {
         isScraperIdle = false
         const authedCookies = await stravaAuther.getCookies( login, password)
@@ -117,4 +132,5 @@ function defaultUrlForPinging(size, authParams) {
 
 
 module.exports.getStravaTileUrl = getStravaTileUrl
+module.exports.fetchAuthParams = fetchAuthParams
 module.exports.getContent = getContent

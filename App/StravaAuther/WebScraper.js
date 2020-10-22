@@ -11,20 +11,25 @@ async function getCookies( login, password) {
   const page1 = await browser.newPage()
   await page1.setViewport({width: 1280, height: 1024})
   await page1.goto('https://www.strava.com/login', {waitUntil: 'networkidle2'})
+  // await page1.screenshot({path: '01_login_page_loaded.png'});
+
   await page1.waitForSelector('form')
   await page1.type('input#email', login)
   await page1.type('input#password', password)
+  // await page1.screenshot({path: '02_login_and_password_inserted.png'});
+
   await page1.waitFor(200)
   await page1.evaluate(()=>document
     .querySelector('button#login-button')
     .click()
   )
   await page1.waitForNavigation()
+  // await page1.screenshot({path: '03_redirected_to_new_page.png'});
 
   // Извлекаем _strava4_session cookie
   const sessionFourCookie = await page1.cookies()
-  //console.log(sessionFourCookie)
-  //console.log("================================")
+  // console.log(sessionFourCookie)
+  // console.log("================================")
 
   // Авторизация на heatmap-external-a.strava.com/auth
   const page2 = await browser.newPage()
@@ -33,7 +38,8 @@ async function getCookies( login, password) {
 
   // Извлекаем дополненные CloudFront cookies
   const cloudfontCookie = await page2.cookies()
-  //console.log(cloudfontCookie)
+  // await page2.screenshot({path: '04_redirected_to_heatmap_page.png'});
+  // console.log(cloudfontCookie)
 
   // console.log('Browser end')
 
