@@ -11,7 +11,7 @@
     "test": "node test.js"
   },
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-queue": "0.0.12",
     "express-rate-limit": "^5.0.0",
     "node-worker-threads-pool": "^1.0.7",
